@@ -87,7 +87,7 @@ export async function GET(request: Request) {
         pending: pendingUrl,
       },
       external_reference: `founder-${Date.now()}`,
-    } as const;
+    };
 
     const preference = await preferenceClient.create({
       body: isLocalhostUrl(baseUrl)
