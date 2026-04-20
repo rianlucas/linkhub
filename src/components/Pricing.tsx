@@ -86,7 +86,7 @@ export default function Pricing() {
         <AnimateOnScroll delay={100}>
           <p className="text-2xl text-[#3D3A35] mb-20 max-w-2xl mx-auto">
             Apenas um paciente fechado a mais por mês já paga um ano inteiro de
-            BioNutri.
+            WellPage.
           </p>
         </AnimateOnScroll>
 

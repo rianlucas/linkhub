@@ -83,15 +83,15 @@ function CalendarSVG() {
 const features = [
   {
     icon: WandSparkles,
-    title: "Bio profissional em minutos",
+    title: "Página profissional em minutos",
     description:
-      "Esqueça os links genéricos alinhados. Sua página BioNutri é um mini-site desenhado para converter, com espaço para foto, CRM/CREF, e botões que dão vontade de clicar.",
+      "Esqueça os links genéricos alinhados. Sua página WellPage é um mini-site desenhado para converter, com espaço para foto, CRM/CREF, e botões que dão vontade de clicar.",
     visual: BioMockupSVG,
     imageFirst: true,
   },
   {
     icon: ShoppingCart,
-    title: "Venda ebooks sem sair da Bio",
+    title: "Venda ebooks sem sair da WellPage",
     description:
       "Suba seu PDF, defina o preço e pronto. O paciente clica, paga via PIX ou cartão, e baixa o arquivo na mesma tela. Sem redirecionamentos, sem contas externas.",
     visual: EbookSVG,

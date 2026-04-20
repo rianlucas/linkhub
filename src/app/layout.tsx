@@ -23,9 +23,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "BioNutri | Sua bio tão profissional quanto você",
+  title: "WellPage | Sua presença digital, do jeito certo.",
   description:
-    "A bio profissional para nutricionistas e personal trainers. Agende, venda ebooks e receba pagamentos — tudo em um único link.",
+    "A landing page profissional para nutricionistas e personal trainers. Agende, venda ebooks e receba pagamentos em um único lugar.",
 };
 
 export default function RootLayout({

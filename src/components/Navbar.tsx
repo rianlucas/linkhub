@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
 
 export default function Navbar() {
@@ -25,10 +26,17 @@ export default function Navbar() {
       <div className="max-w-[1280px] mx-auto w-full px-6 md:px-20 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2">
+          <Image
+            src="/wellpage-symbol.png"
+            alt="WellPage"
+            width={26}
+            height={26}
+            className="h-6 w-6"
+            priority
+          />
           <span className="font-[var(--font-playfair)] font-medium text-xl text-[#0D0D0D] tracking-tight">
-            BioNutri
+            WellPage
           </span>
-          <div className="w-1.5 h-1.5 rounded-full bg-[#7D5A3C] mb-1" />
         </div>
 
         {/* Desktop links */}
