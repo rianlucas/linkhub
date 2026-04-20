@@ -25,14 +25,14 @@ export default function CtaSection() {
 
         <AnimateOnScroll delay={100}>
           <h2 className="font-[var(--font-playfair)] font-medium text-5xl md:text-7xl text-[#F2F2F2] leading-tight max-w-4xl mx-auto mb-8 tracking-tight">
-            A última bio que você vai precisar configurar.
+            Pare de perder pacientes todos os dias.
           </h2>
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={200}>
           <p className="text-2xl text-[#B6B09F] mb-8">
-            Garanta seu plano vitalício com um pagamento único hoje. Plataforma
-            no ar em 6 semanas.
+            Crie sua página profissional agora e comece a transformar seguidores
+            em clientes.
           </p>
         </AnimateOnScroll>
 
@@ -51,7 +51,7 @@ export default function CtaSection() {
             }}
             className="inline-block bg-[#7D5A3C] text-white font-normal text-xl px-12 py-5 rounded-md hover:bg-[#6B4C32] transition-all duration-150 hover:scale-[1.02] mb-6 shadow-[0_0_20px_rgba(125,90,60,0.2)]"
           >
-            Garantir minha vaga com desconto
+            Criar minha página grátis
           </button>
         </AnimateOnScroll>
 

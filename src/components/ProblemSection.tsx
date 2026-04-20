@@ -5,23 +5,21 @@ import { AnimateOnScroll } from "@/hooks/useInView";
 const painPoints = [
   {
     number: "01",
-    title:
-      "Copiar link da agenda, colar no WhatsApp, esperar confirmação, repetir.",
+    title: "Links bagunçados confundem quem quer comprar.",
     description:
-      "3 a 5 horas por semana que você poderia usar atendendo ou descansando.",
+      "Quem chega pronto para fechar consulta se perde e desiste no caminho.",
   },
   {
     number: "02",
-    title: "Paciente marcou, não pagou, não veio. Horário perdido.",
+    title: "Conversas no WhatsApp não viram consulta.",
     description:
-      "No-show custa em média R$180 por consulta desperdiçada.",
+      "Você responde, negocia, envia informação... mas a agenda continua vazia.",
   },
   {
     number: "03",
-    title:
-      "Ebook pronto. Mas vender por onde? Mais uma taxa, mais uma senha.",
+    title: "Seu perfil não transmite profissionalismo.",
     description:
-      "A fragmentação afasta o paciente que quer comprar por impulso.",
+      "Sem clareza e autoridade, oportunidades viram pacientes perdidos.",
   },
 ];
 
@@ -34,11 +32,17 @@ export default function ProblemSection() {
       <div className="max-w-[1280px] w-full mx-auto px-6 md:px-20">
         <AnimateOnScroll>
           <h2 className="font-[var(--font-playfair)] font-medium italic text-4xl md:text-5xl text-center text-[#EAE4D5] mb-20 max-w-4xl mx-auto tracking-tight leading-tight">
-            &ldquo;Quantas horas da sua semana você passa fazendo isso?&rdquo;
+            Você posta todos os dias... mas não consegue novos pacientes.
           </h2>
         </AnimateOnScroll>
 
         <div className="max-w-3xl mx-auto flex flex-col gap-16 relative">
+          <AnimateOnScroll className="pl-8">
+            <p className="text-[#B6B09F] text-xl md:text-2xl leading-relaxed mb-6">
+              Enquanto isso, você continua perdendo oportunidades.
+            </p>
+          </AnimateOnScroll>
+
           {/* Timeline line */}
           <div className="absolute left-0 top-2 bottom-2 w-[2px] bg-[#7D5A3C] opacity-40" />
 

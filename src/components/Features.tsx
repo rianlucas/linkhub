@@ -83,25 +83,25 @@ function CalendarSVG() {
 const features = [
   {
     icon: WandSparkles,
-    title: "Página profissional em minutos",
+    title: "Mais profissionalismo",
     description:
-      "Esqueça os links genéricos alinhados. Sua página WellPage é um mini-site desenhado para converter, com espaço para foto, CRM/CREF, e botões que dão vontade de clicar.",
+      "Transmita autoridade logo na primeira impressão e mostre o valor do seu trabalho.",
     visual: BioMockupSVG,
     imageFirst: true,
   },
   {
     icon: ShoppingCart,
-    title: "Venda ebooks sem sair da WellPage",
+    title: "Mais conversões",
     description:
-      "Suba seu PDF, defina o preço e pronto. O paciente clica, paga via PIX ou cartão, e baixa o arquivo na mesma tela. Sem redirecionamentos, sem contas externas.",
+      "Transforme visitantes em pacientes com um caminho claro entre interesse e ação.",
     visual: EbookSVG,
     imageFirst: false,
   },
   {
     icon: CalendarCheck,
-    title: "Agendamento sem prejuízo",
+    title: "Mais organização",
     description:
-      "Acabe com os horários furados. O paciente escolhe a vaga e só confirma após o pagamento do sinal. O dinheiro vai direto para sua conta na hora.",
+      "Centralize tudo em um só lugar: consultas, WhatsApp e oportunidades de venda.",
     visual: CalendarSVG,
     imageFirst: true,
   },

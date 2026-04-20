@@ -31,23 +31,17 @@ export default function Hero() {
             </div>
           </AnimateOnScroll>
 
-          {/* Headline */}
-          <h1 className="font-[var(--font-playfair)] font-bold text-5xl md:text-7xl lg:text-[5rem] leading-[0.93] tracking-tight text-[#0D0D0D] mb-8">
-            <AnimateOnScroll delay={100}>
-              <span className="block">Sua bio.</span>
-            </AnimateOnScroll>
-            <AnimateOnScroll delay={200}>
-              <span className="block">Sua marca.</span>
-            </AnimateOnScroll>
-            <AnimateOnScroll delay={300}>
-              <span className="block text-[#7D5A3C]">Suas vendas.</span>
-            </AnimateOnScroll>
-          </h1>
+          <AnimateOnScroll delay={100}>
+            <h1 className="font-[var(--font-playfair)] font-bold text-5xl md:text-7xl lg:text-[5rem] leading-[0.93] tracking-tight text-[#0D0D0D] mb-8">
+              Transforme seu Instagram em uma máquina de captar pacientes
+            </h1>
+          </AnimateOnScroll>
 
           <AnimateOnScroll delay={300}>
             <p className="text-2xl text-[#3D3A35] leading-relaxed max-w-lg mb-10">
-              Nutricionistas e personal trainers que faturam sério merecem uma
-              bio que trabalha por eles — não 5 ferramentas desconexas.
+              Pare de perder clientes por causa de uma bio mal estruturada.
+              Crie uma página profissional com WhatsApp, agendamento e vendas
+              em minutos.
             </p>
           </AnimateOnScroll>
 
@@ -66,13 +60,13 @@ export default function Hero() {
                 }}
                 className="relative flex flex-col items-center justify-center w-full sm:w-auto bg-[#7D5A3C] hover:bg-[#6B4C32] text-white px-8 py-4 rounded-md transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
               >
-                <span className="text-xl">Garantir vaga com 50% OFF</span>
+                <span className="text-xl">Criar minha página grátis</span>
                 <div className="flex items-center gap-2 mt-1 text-white/80 text-sm font-[var(--font-dm-mono)]">
-                  <span className="line-through decoration-white/50">
-                    R$39/mês
-                  </span>
+                  <span>WhatsApp</span>
                   <ArrowRight className="w-3 h-3" strokeWidth={1.5} />
-                  <span className="text-white">R$19 vitalício</span>
+                  <span>Agendamento</span>
+                  <ArrowRight className="w-3 h-3" strokeWidth={1.5} />
+                  <span className="text-white">Vendas</span>
                 </div>
               </button>
             </div>

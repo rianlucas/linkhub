@@ -67,7 +67,7 @@ export default function Navbar() {
           }}
           className="bg-[#7D5A3C] hover:bg-[#6B4C32] text-white text-base rounded-md px-5 py-2.5 transition-all duration-150 hover:scale-[1.02] flex items-center gap-2 shadow-sm"
         >
-          Garantir acesso
+          Criar minha página grátis
         </button>
       </div>
     </nav>

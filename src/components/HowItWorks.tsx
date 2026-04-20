@@ -7,25 +7,25 @@ import { useEffect, useRef } from "react";
 const steps = [
   {
     icon: CircleUser,
-    title: "Crie seu perfil",
+    title: "Agendamento direto",
     description:
-      "Sua identidade, foto e dados profissionais em uma interface limpa.",
+      "O paciente escolhe horário e avança para fechar consulta sem atrito.",
     highlighted: false,
     offsetClass: "md:-mt-24",
   },
   {
     icon: Link,
-    title: "Adicione produtos",
+    title: "Botão para WhatsApp",
     description:
-      "Conecte sua agenda e suba seus materiais em PDF direto na plataforma.",
+      "Leve o contato para conversa com contexto certo e maior chance de fechar.",
     highlighted: false,
     offsetClass: "md:mt-24",
   },
   {
     icon: Wallet,
-    title: "Comece a receber",
+    title: "Venda de e-books e planos",
     description:
-      "Checkout transparente. O paciente paga e acessa na mesma hora.",
+      "Ative novas fontes de receita e venda com uma jornada simples.",
     highlighted: true,
     offsetClass: "md:-mt-24",
   },
@@ -60,7 +60,7 @@ export default function HowItWorks() {
       <div className="max-w-[1280px] mx-auto px-6 md:px-20 text-center">
         <AnimateOnScroll>
           <h2 className="font-[var(--font-playfair)] font-medium text-4xl md:text-5xl text-[#0D0D0D] tracking-tight mb-20">
-            Tudo pronto em 5 minutos
+            Com a WellPage você transforma seu Instagram em um sistema de vendas
           </h2>
         </AnimateOnScroll>
 

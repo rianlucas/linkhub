@@ -45,7 +45,7 @@ const founderPerks = [
     icon: Check,
     iconBg: "bg-[#4A7C59]/10",
     iconColor: "text-[#4A7C59]",
-    text: "Pagamento único de R$19 agora — plataforma lançada em 6 semanas",
+    text: "Oferta de lançamento por tempo limitado",
   },
   {
     icon: ShieldCheck,
@@ -135,7 +135,7 @@ export default function Pricing() {
               }}
               className="w-full bg-transparent border-[1.5px] border-[#D4CFC7] text-[#0D0D0D] font-normal text-lg px-6 py-3 rounded-md hover:bg-[#FAFAF8] transition-colors mt-auto cursor-pointer"
             >
-              Entrar na lista de espera
+              Montar minha bio profissional
             </button>
           </AnimateOnScroll>
 
@@ -162,7 +162,7 @@ export default function Pricing() {
                 </span>
               </div>
               <span className="text-base text-[#7A756C]">
-                Garante R$19/mês vitalício no lançamento
+                Acesso vitalício por apenas R$19
               </span>
             </div>
 
@@ -196,7 +196,7 @@ export default function Pricing() {
               }}
               className="w-full bg-[#7D5A3C] text-white font-normal text-xl px-6 py-4 rounded-md hover:bg-[#6B4C32] transition-all duration-150 hover:scale-[1.02] shadow-md mt-auto cursor-pointer inline-flex items-center justify-center"
             >
-              Garantir vaga com 50% OFF
+              Quero captar mais pacientes
             </button>
           </AnimateOnScroll>
 
