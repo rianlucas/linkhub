@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { upsertFounder } from "@/server/founders/store";
 import { isValidEmail } from "@/lib/validation";
 import { sendEarlyAccessWelcomeEmail } from "@/lib/email";
 
@@ -24,12 +23,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await upsertFounder(email);
-
-    // Envio de email é best-effort: se falhar, logamos e seguimos.
-    // Assim o usuário não perde o cadastro por um problema momentâneo na Resend.
+    // Sem persistência: apenas valida e dispara o email de confirmação.
     try {
-      await sendEarlyAccessWelcomeEmail(result.founder.email);
+      await sendEarlyAccessWelcomeEmail(email);
     } catch (emailError) {
       console.error(
         "[Founders] Falha ao enviar email de boas-vindas (acesso antecipado):",
@@ -39,19 +35,15 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        status: result.status,
-        founder: { id: result.founder.id, email: result.founder.email },
         message:
-          result.status === "created"
-            ? "Email confirmado! Em instantes você recebe as próximas instruções."
-            : "Você já estava cadastrado. Reenviamos as instruções para o seu email.",
+          "Email confirmado! Em instantes você recebe as próximas instruções.",
       },
-      { status: result.status === "created" ? 201 : 200 }
+      { status: 201 }
     );
   } catch (error) {
-    console.error("[Founders] Falha ao salvar registro:", error);
+    console.error("[Founders] Falha ao processar acesso antecipado:", error);
     return NextResponse.json(
-      { error: "Não foi possível salvar seus dados agora." },
+      { error: "Não foi possível processar seu cadastro agora." },
       { status: 500 }
     );
   }
