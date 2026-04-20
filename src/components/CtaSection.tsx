@@ -2,10 +2,10 @@
 
 import { ShieldCheck } from "lucide-react";
 import { AnimateOnScroll } from "@/hooks/useInView";
-import { useCheckoutModal } from "@/components/CheckoutModalProvider";
+import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
 
 export default function CtaSection() {
-  const { openCheckoutModal } = useCheckoutModal();
+  const { openEarlyAccessModal } = useEarlyAccessModal();
 
   return (
     <section
@@ -44,7 +44,7 @@ export default function CtaSection() {
         <AnimateOnScroll delay={300}>
           <button
             type="button"
-            onClick={openCheckoutModal}
+            onClick={openEarlyAccessModal}
             className="inline-block bg-[#7D5A3C] text-white font-normal text-xl px-12 py-5 rounded-md hover:bg-[#6B4C32] transition-all duration-150 hover:scale-[1.02] mb-6 shadow-[0_0_20px_rgba(125,90,60,0.2)]"
           >
             Garantir minha vaga com desconto

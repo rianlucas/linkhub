@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useCheckoutModal } from "@/components/CheckoutModalProvider";
+import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { openCheckoutModal } = useCheckoutModal();
+  const { openEarlyAccessModal } = useEarlyAccessModal();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -52,7 +52,7 @@ export default function Navbar() {
         {/* CTA */}
         <button
           type="button"
-          onClick={openCheckoutModal}
+          onClick={openEarlyAccessModal}
           className="bg-[#7D5A3C] hover:bg-[#6B4C32] text-white text-base rounded-md px-5 py-2.5 transition-all duration-150 hover:scale-[1.02] flex items-center gap-2 shadow-sm"
         >
           Garantir acesso

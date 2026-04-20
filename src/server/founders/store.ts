@@ -4,39 +4,36 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 
-export type FounderPaymentStatus = "pending" | "paid" | "refunded" | "failed";
-
-export type FounderPaymentInfo = {
-  paymentId: string;
-  status: FounderPaymentStatus;
-  amount?: number;
-  paymentMethodId?: string;
-  paymentTypeId?: string;
-  paidAt?: string;
-  rawStatus?: string;
-  statusDetail?: string;
-};
-
 export type FounderEntry = {
   id: string;
-  firstName: string;
-  lastName: string;
   email: string;
-  cpf: string;
   createdAt: string;
-  updatedAt: string;
-  payment?: FounderPaymentInfo;
 };
 
-const FOUNDERS_FILE_PATH = path.join(process.cwd(), "data", "founders.json");
+function resolveDataDir() {
+  const configured = process.env.DATA_DIR?.trim();
+  if (configured) return configured;
+  if (process.env.NODE_ENV === "production") return "/tmp/linkhub-data";
+  return path.join(process.cwd(), "data");
+}
+
+const FOUNDERS_FILE_PATH = path.join(resolveDataDir(), "founders.json");
 
 async function readAll(): Promise<FounderEntry[]> {
   try {
     const content = await fs.readFile(FOUNDERS_FILE_PATH, "utf8");
+    if (!content.trim()) return [];
     const parsed = JSON.parse(content) as FounderEntry[];
     return Array.isArray(parsed) ? parsed : [];
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    const err = error as NodeJS.ErrnoException;
+    if (err.code === "ENOENT") return [];
+    if (err instanceof SyntaxError) {
+      console.warn(
+        "[Founders] JSON inválido em founders.json; ignorando conteúdo atual."
+      );
+      return [];
+    }
     throw error;
   }
 }
@@ -50,85 +47,29 @@ async function writeAll(entries: FounderEntry[]) {
   );
 }
 
-type UpsertInput = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  cpf: string;
-};
-
 export type UpsertResult = {
   status: "created" | "existing";
   founder: FounderEntry;
 };
 
 /**
- * Persiste um registro de fundador garantindo unicidade por `email` OU `cpf`.
- *
- * Regras:
- * - Se já existir registro com o mesmo `email` ou mesmo `cpf` → retorna o
- *   registro existente SEM modificar o arquivo (o checkout segue normalmente).
- * - Caso contrário → cria um novo registro.
+ * Registra um email no "acesso antecipado" (founders). Se o email já existir,
+ * retorna o registro atual sem duplicar.
  */
-export async function upsertFounder(
-  input: UpsertInput
-): Promise<UpsertResult> {
+export async function upsertFounder(email: string): Promise<UpsertResult> {
+  const normalizedEmail = email.trim().toLowerCase();
   const entries = await readAll();
 
-  const existing = entries.find(
-    (entry) => entry.email === input.email || entry.cpf === input.cpf
-  );
-
+  const existing = entries.find((entry) => entry.email === normalizedEmail);
   if (existing) {
     return { status: "existing", founder: existing };
   }
 
-  const now = new Date().toISOString();
   const created: FounderEntry = {
     id: randomUUID(),
-    ...input,
-    createdAt: now,
-    updatedAt: now,
+    email: normalizedEmail,
+    createdAt: new Date().toISOString(),
   };
   await writeAll([...entries, created]);
   return { status: "created", founder: created };
-}
-
-export async function findFounder(
-  predicate: (entry: FounderEntry) => boolean
-): Promise<FounderEntry | null> {
-  const entries = await readAll();
-  return entries.find(predicate) ?? null;
-}
-
-/**
- * Atualiza os dados de pagamento de um fundador (chamado pelo webhook do MP).
- * Tenta casar por `founderId` primeiro; se não achar, tenta por `email`.
- * Retorna `null` se não encontrar nenhum registro.
- */
-export async function recordFounderPayment(params: {
-  founderId?: string;
-  email?: string;
-  payment: FounderPaymentInfo;
-}): Promise<FounderEntry | null> {
-  const entries = await readAll();
-
-  const match = entries.find((entry) => {
-    if (params.founderId && entry.id === params.founderId) return true;
-    if (params.email && entry.email === params.email.toLowerCase()) return true;
-    return false;
-  });
-
-  if (!match) return null;
-
-  const now = new Date().toISOString();
-  const updated: FounderEntry = {
-    ...match,
-    payment: params.payment,
-    updatedAt: now,
-  };
-
-  const next = entries.map((entry) => (entry.id === match.id ? updated : entry));
-  await writeAll(next);
-  return updated;
 }

@@ -1,42 +1,51 @@
 import { NextResponse } from "next/server";
 import { upsertFounder } from "@/server/founders/store";
-import { isValidCpf, isValidEmail, onlyDigits } from "@/lib/validation";
+import { isValidEmail } from "@/lib/validation";
+import { sendEarlyAccessWelcomeEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
 type FounderRequestBody = {
-  firstName?: string;
-  lastName?: string;
   email?: string;
-  cpf?: string;
 };
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as FounderRequestBody;
-
-    const firstName = body.firstName?.trim() ?? "";
-    const lastName = body.lastName?.trim() ?? "";
+    const body = (await request.json().catch(() => ({}))) as FounderRequestBody;
     const email = body.email?.trim().toLowerCase() ?? "";
-    const cpf = onlyDigits(body.cpf ?? "");
 
-    const fieldErrors: Record<string, string> = {};
-    if (!firstName) fieldErrors.firstName = "Informe seu nome.";
-    if (!lastName) fieldErrors.lastName = "Informe seu sobrenome.";
-    if (!isValidEmail(email)) fieldErrors.email = "Email inválido.";
-    if (!isValidCpf(cpf)) fieldErrors.cpf = "CPF inválido.";
-
-    if (Object.keys(fieldErrors).length > 0) {
+    if (!isValidEmail(email)) {
       return NextResponse.json(
-        { error: "Dados inválidos.", fieldErrors },
+        {
+          error: "Email inválido.",
+          fieldErrors: { email: "Informe um email válido." },
+        },
         { status: 400 }
       );
     }
 
-    const result = await upsertFounder({ firstName, lastName, email, cpf });
+    const result = await upsertFounder(email);
+
+    // Envio de email é best-effort: se falhar, logamos e seguimos.
+    // Assim o usuário não perde o cadastro por um problema momentâneo na Resend.
+    try {
+      await sendEarlyAccessWelcomeEmail(result.founder.email);
+    } catch (emailError) {
+      console.error(
+        "[Founders] Falha ao enviar email de boas-vindas (acesso antecipado):",
+        emailError
+      );
+    }
 
     return NextResponse.json(
-      { founder: result.founder, status: result.status },
+      {
+        status: result.status,
+        founder: { id: result.founder.id, email: result.founder.email },
+        message:
+          result.status === "created"
+            ? "Email confirmado! Em instantes você recebe as próximas instruções."
+            : "Você já estava cadastrado. Reenviamos as instruções para o seu email.",
+      },
       { status: result.status === "created" ? 201 : 200 }
     );
   } catch (error) {

@@ -9,7 +9,7 @@ import {
   Mail,
 } from "lucide-react";
 import { AnimateOnScroll } from "@/hooks/useInView";
-import { useCheckoutModal } from "@/components/CheckoutModalProvider";
+import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
 import WaitlistModal from "@/components/WaitlistModal";
 
 const starterFeatures = [
@@ -68,7 +68,7 @@ const founderPerks = [
 
 export default function Pricing() {
   const [waitlistModalOpen, setWaitlistModalOpen] = useState(false);
-  const { openCheckoutModal } = useCheckoutModal();
+  const { openEarlyAccessModal } = useEarlyAccessModal();
 
   return (
     <>
@@ -185,7 +185,7 @@ export default function Pricing() {
 
             <button
               type="button"
-              onClick={openCheckoutModal}
+              onClick={openEarlyAccessModal}
               className="w-full bg-[#7D5A3C] text-white font-normal text-xl px-6 py-4 rounded-md hover:bg-[#6B4C32] transition-all duration-150 hover:scale-[1.02] shadow-md mt-auto cursor-pointer inline-flex items-center justify-center"
             >
               Garantir vaga com 50% OFF

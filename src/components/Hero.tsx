@@ -11,10 +11,10 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { AnimateOnScroll } from "@/hooks/useInView";
-import { useCheckoutModal } from "@/components/CheckoutModalProvider";
+import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
 
 export default function Hero() {
-  const { openCheckoutModal } = useCheckoutModal();
+  const { openEarlyAccessModal } = useEarlyAccessModal();
 
   return (
     <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-[linear-gradient(to_bottom,rgba(182,176,159,0.05)_1px,transparent_1px)] bg-[length:100%_32px]">
@@ -59,7 +59,7 @@ export default function Hero() {
               <div className="absolute -inset-1 bg-gradient-to-r from-[#7D5A3C] to-[#EAE4D5] rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500" />
               <button
                 type="button"
-                onClick={openCheckoutModal}
+                onClick={openEarlyAccessModal}
                 className="relative flex flex-col items-center justify-center w-full sm:w-auto bg-[#7D5A3C] hover:bg-[#6B4C32] text-white px-8 py-4 rounded-md transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
               >
                 <span className="text-xl">Garantir vaga com 50% OFF</span>
