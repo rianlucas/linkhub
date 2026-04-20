@@ -1,32 +1,49 @@
 import { NextResponse } from "next/server";
+import { Payment } from "mercadopago";
+import mpClient, { verifyMercadoPagoSignature } from "@/lib/mercadopago";
+import { handleMercadoPagoPayment } from "@/server/mercadopago/handle-payment";
 
 export const runtime = "nodejs";
 
+type WebhookPayload = {
+  type?: string;
+  action?: string;
+  data?: { id?: string | number };
+};
+
 export async function POST(request: Request) {
   try {
-    const payload = await request.json();
+    const signatureError = verifyMercadoPagoSignature(request);
+    if (signatureError) return signatureError;
 
-    console.log("[MercadoPago Webhook] Evento recebido:", payload);
+    const body = (await request.json()) as WebhookPayload;
+    const { type, data } = body;
 
-    return NextResponse.json({ received: true });
+    switch (type) {
+      case "payment": {
+        if (!data?.id) break;
+
+        const payment = new Payment(mpClient);
+        const paymentData = await payment.get({ id: String(data.id) });
+
+        if (
+          paymentData.status === "approved" ||
+          paymentData.date_approved !== null
+        ) {
+          await handleMercadoPagoPayment(paymentData);
+        }
+        break;
+      }
+      default:
+        console.log("[MercadoPago] Evento não tratado:", type);
+    }
+
+    return NextResponse.json({ received: true }, { status: 200 });
   } catch (error) {
-    console.error("[MercadoPago Webhook] Erro ao processar evento:", error);
-
+    console.error("[MercadoPago] Falha no webhook:", error);
     return NextResponse.json(
-      { error: "Webhook recebido com erro de parse." },
-      { status: 400 }
+      { error: "Webhook handler failed" },
+      { status: 500 }
     );
   }
-}
-
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-
-  console.log("[MercadoPago Webhook] Query recebida:", {
-    id: url.searchParams.get("id"),
-    topic: url.searchParams.get("topic"),
-    type: url.searchParams.get("type"),
-  });
-
-  return NextResponse.json({ ok: true });
 }

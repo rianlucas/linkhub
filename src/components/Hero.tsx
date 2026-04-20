@@ -11,9 +11,11 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { AnimateOnScroll } from "@/hooks/useInView";
-import { MERCADO_PAGO_CHECKOUT_URL } from "@/lib/payment";
+import { useCheckoutModal } from "@/components/CheckoutModalProvider";
 
 export default function Hero() {
+  const { openCheckoutModal } = useCheckoutModal();
+
   return (
     <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-[linear-gradient(to_bottom,rgba(182,176,159,0.05)_1px,transparent_1px)] bg-[length:100%_32px]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
@@ -55,8 +57,9 @@ export default function Hero() {
             {/* Primary CTA */}
             <div className="relative w-full sm:w-auto group">
               <div className="absolute -inset-1 bg-gradient-to-r from-[#7D5A3C] to-[#EAE4D5] rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500" />
-              <a
-                href={MERCADO_PAGO_CHECKOUT_URL}
+              <button
+                type="button"
+                onClick={openCheckoutModal}
                 className="relative flex flex-col items-center justify-center w-full sm:w-auto bg-[#7D5A3C] hover:bg-[#6B4C32] text-white px-8 py-4 rounded-md transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
               >
                 <span className="text-xl">Garantir vaga com 50% OFF</span>
@@ -67,7 +70,7 @@ export default function Hero() {
                   <ArrowRight className="w-3 h-3" strokeWidth={1.5} />
                   <span className="text-white">R$19 vitalício</span>
                 </div>
-              </a>
+              </button>
             </div>
 
             {/* Secondary */}

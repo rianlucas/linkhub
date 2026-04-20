@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, DM_Mono, Playfair_Display } from "next/font/google";
+import { CheckoutModalProvider } from "@/components/CheckoutModalProvider";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -37,7 +38,9 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${dmSans.variable} ${dmMono.variable} ${playfair.variable} scroll-smooth`}
     >
-      <body>{children}</body>
+      <body>
+        <CheckoutModalProvider>{children}</CheckoutModalProvider>
+      </body>
     </html>
   );
 }

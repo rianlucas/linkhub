@@ -2,9 +2,11 @@
 
 import { ShieldCheck } from "lucide-react";
 import { AnimateOnScroll } from "@/hooks/useInView";
-import { MERCADO_PAGO_CHECKOUT_URL } from "@/lib/payment";
+import { useCheckoutModal } from "@/components/CheckoutModalProvider";
 
 export default function CtaSection() {
+  const { openCheckoutModal } = useCheckoutModal();
+
   return (
     <section
       id="cta"
@@ -40,12 +42,13 @@ export default function CtaSection() {
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={300}>
-          <a
-            href={MERCADO_PAGO_CHECKOUT_URL}
+          <button
+            type="button"
+            onClick={openCheckoutModal}
             className="inline-block bg-[#7D5A3C] text-white font-normal text-xl px-12 py-5 rounded-md hover:bg-[#6B4C32] transition-all duration-150 hover:scale-[1.02] mb-6 shadow-[0_0_20px_rgba(125,90,60,0.2)]"
           >
             Garantir minha vaga com desconto
-          </a>
+          </button>
         </AnimateOnScroll>
 
         <AnimateOnScroll delay={300} className="flex items-center gap-3 text-base text-[#B6B09F]">
