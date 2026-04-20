@@ -9,6 +9,7 @@ import {
   X,
 } from "lucide-react";
 import { isValidEmail } from "@/lib/validation";
+import { getEmailDomain, trackEvent } from "@/lib/analytics";
 
 type EarlyAccessModalProps = {
   onClose: () => void;
@@ -59,9 +60,17 @@ export default function EarlyAccessModal({ onClose }: EarlyAccessModalProps) {
 
     const trimmed = email.trim().toLowerCase();
     if (!isValidEmail(trimmed)) {
+      trackEvent("email_submission_error", {
+        flow: "early_access",
+        step: "validation",
+      });
       setFieldError("Informe um email válido.");
       return;
     }
+
+    trackEvent("submit_early_access_email", {
+      email_domain: getEmailDomain(trimmed),
+    });
 
     try {
       setSubmitting(true);
@@ -79,12 +88,22 @@ export default function EarlyAccessModal({ onClose }: EarlyAccessModalProps) {
         throw new Error(data.error ?? "Não foi possível cadastrar agora.");
       }
 
+      trackEvent("email_submission_success", {
+        flow: "early_access",
+        email_domain: getEmailDomain(trimmed),
+      });
+
       setSuccessMessage(
         data.message ??
           "Pronto! Em instantes você recebe um email com as próximas instruções."
       );
       setEmail("");
     } catch (err) {
+      trackEvent("email_submission_error", {
+        flow: "early_access",
+        step: "request",
+      });
+
       setGlobalError(
         err instanceof Error
           ? err.message

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
+import { trackEvent } from "@/lib/analytics";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -60,7 +61,10 @@ export default function Navbar() {
         {/* CTA */}
         <button
           type="button"
-          onClick={openEarlyAccessModal}
+          onClick={() => {
+            trackEvent("click_cta_early_access", { placement: "navbar" });
+            openEarlyAccessModal("navbar");
+          }}
           className="bg-[#7D5A3C] hover:bg-[#6B4C32] text-white text-base rounded-md px-5 py-2.5 transition-all duration-150 hover:scale-[1.02] flex items-center gap-2 shadow-sm"
         >
           Garantir acesso

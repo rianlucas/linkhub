@@ -11,6 +11,7 @@ import {
 import { AnimateOnScroll } from "@/hooks/useInView";
 import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
 import WaitlistModal from "@/components/WaitlistModal";
+import { trackEvent } from "@/lib/analytics";
 
 const starterFeatures = [
   { text: "Perfil profissional básico", included: true },
@@ -127,7 +128,11 @@ export default function Pricing() {
             </ul>
             <button
               type="button"
-              onClick={() => setWaitlistModalOpen(true)}
+              onClick={() => {
+                trackEvent("click_cta_waitlist", { placement: "pricing_starter" });
+                trackEvent("open_waitlist_modal", { source: "pricing_starter" });
+                setWaitlistModalOpen(true);
+              }}
               className="w-full bg-transparent border-[1.5px] border-[#D4CFC7] text-[#0D0D0D] font-normal text-lg px-6 py-3 rounded-md hover:bg-[#FAFAF8] transition-colors mt-auto cursor-pointer"
             >
               Entrar na lista de espera
@@ -185,7 +190,10 @@ export default function Pricing() {
 
             <button
               type="button"
-              onClick={openEarlyAccessModal}
+              onClick={() => {
+                trackEvent("click_cta_early_access", { placement: "pricing_founder" });
+                openEarlyAccessModal("pricing_founder");
+              }}
               className="w-full bg-[#7D5A3C] text-white font-normal text-xl px-6 py-4 rounded-md hover:bg-[#6B4C32] transition-all duration-150 hover:scale-[1.02] shadow-md mt-auto cursor-pointer inline-flex items-center justify-center"
             >
               Garantir vaga com 50% OFF

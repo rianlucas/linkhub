@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, DM_Mono, Playfair_Display } from "next/font/google";
+import AnalyticsProvider from "@/components/AnalyticsProvider";
 import { EarlyAccessModalProvider } from "@/components/EarlyAccessModalProvider";
 import "./globals.css";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
       className={`${dmSans.variable} ${dmMono.variable} ${playfair.variable} scroll-smooth`}
     >
       <body>
+        <AnalyticsProvider />
         <EarlyAccessModalProvider>{children}</EarlyAccessModalProvider>
       </body>
     </html>

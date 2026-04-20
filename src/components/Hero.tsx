@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { AnimateOnScroll } from "@/hooks/useInView";
 import { useEarlyAccessModal } from "@/components/EarlyAccessModalProvider";
+import { trackEvent } from "@/lib/analytics";
 
 export default function Hero() {
   const { openEarlyAccessModal } = useEarlyAccessModal();
@@ -59,7 +60,10 @@ export default function Hero() {
               <div className="absolute -inset-1 bg-gradient-to-r from-[#7D5A3C] to-[#EAE4D5] rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500" />
               <button
                 type="button"
-                onClick={openEarlyAccessModal}
+                onClick={() => {
+                  trackEvent("click_cta_early_access", { placement: "hero" });
+                  openEarlyAccessModal("hero");
+                }}
                 className="relative flex flex-col items-center justify-center w-full sm:w-auto bg-[#7D5A3C] hover:bg-[#6B4C32] text-white px-8 py-4 rounded-md transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
               >
                 <span className="text-xl">Garantir vaga com 50% OFF</span>

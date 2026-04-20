@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, LoaderCircle, X } from "lucide-react";
+import { getEmailDomain, trackEvent } from "@/lib/analytics";
 
 type WaitlistModalProps = {
   onClose: () => void;
@@ -51,9 +52,17 @@ export default function WaitlistModal({ onClose }: WaitlistModalProps) {
     setSuccessMessage(null);
 
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+      trackEvent("email_submission_error", {
+        flow: "waitlist",
+        step: "validation",
+      });
       setError("Digite um email valido para entrar na lista.");
       return;
     }
+
+    trackEvent("submit_waitlist_email", {
+      email_domain: getEmailDomain(email.trim()),
+    });
 
     try {
       setLoading(true);
@@ -69,9 +78,17 @@ export default function WaitlistModal({ onClose }: WaitlistModalProps) {
         throw new Error(data.error ?? "Nao foi possivel salvar seu email agora.");
       }
 
+      trackEvent("email_submission_success", {
+        flow: "waitlist",
+        email_domain: getEmailDomain(email.trim()),
+      });
       setSuccessMessage(data.message ?? "Voce entrou na lista com sucesso! 🎉");
       setEmail("");
     } catch (submitError) {
+      trackEvent("email_submission_error", {
+        flow: "waitlist",
+        step: "request",
+      });
       setError(
         submitError instanceof Error
           ? submitError.message

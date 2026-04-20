@@ -8,9 +8,10 @@ import {
   useState,
 } from "react";
 import EarlyAccessModal from "@/components/EarlyAccessModal";
+import { trackEvent } from "@/lib/analytics";
 
 type EarlyAccessModalContextValue = {
-  openEarlyAccessModal: () => void;
+  openEarlyAccessModal: (source?: string) => void;
   closeEarlyAccessModal: () => void;
 };
 
@@ -24,7 +25,10 @@ export function EarlyAccessModalProvider({
 }) {
   const [open, setOpen] = useState(false);
 
-  const openEarlyAccessModal = useCallback(() => setOpen(true), []);
+  const openEarlyAccessModal = useCallback((source?: string) => {
+    trackEvent("open_early_access_modal", { source: source ?? "unknown" });
+    setOpen(true);
+  }, []);
   const closeEarlyAccessModal = useCallback(() => setOpen(false), []);
 
   const value = useMemo(
